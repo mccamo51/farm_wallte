@@ -45,9 +45,9 @@ class _OfflineViewState extends State<OfflineView> {
                   color: WHITE,
                 ),
                 onPressed: () {
-                  // getAllRecords().whenComplete(() {
-                  syncRecord(context);
-                  // });
+                  getAllRecords().whenComplete(() {
+                    syncRecord(context);
+                  });
                 },
                 label: Text(
                   "Sync All",
@@ -70,7 +70,7 @@ class _OfflineViewState extends State<OfflineView> {
           Container(child: emptyBox(context, msg: "No record saved")),
         if (recordModelList.recordList.length > 0)
           for (var data in recordModelList.recordList)
-            tile(
+            _tile(
                 date: data.date,
                 name: data.fullname,
                 img: data.image == null || data.image == "" ? null : data.image,
@@ -163,6 +163,7 @@ class _OfflineViewState extends State<OfflineView> {
           Map<String, dynamic> decodeData = json.decode(value);
           if (decodeData["ok"] == true) {
             //deleting data
+            print(data.id);
             DBProvider.db.deleteOfflineRecord(int.parse(data.id.toString()));
             ++count;
             setState(() {
@@ -190,7 +191,7 @@ class _OfflineViewState extends State<OfflineView> {
   }
 }
 
-tile({Function onTap, String name, String date, Function onSync, String img}) {
+_tile({Function onTap, String name, String date, Function onSync, String img}) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
