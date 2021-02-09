@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "35389016912",
+    "project_id": "farm-wallet",
+    "storage_bucket": "farm-wallet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35389016912:android:3f19589a85b5d35cb63a55",
+        "android_client_info": {
+          "package_name": "com.example.farmWallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "35389016912-7m3vae774hg611dlvg4ndafo9vbbsnnl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1oA9bi1FV-_FIG60CXmVMivoDN0iWmhk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35389016912-7m3vae774hg611dlvg4ndafo9vbbsnnl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
