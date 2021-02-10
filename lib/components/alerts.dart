@@ -3,8 +3,6 @@ import 'package:farmWallet/spec/sharePreference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-
 Future<void> logoutDialog(BuildContext context) async {
   return showDialog<void>(
     context: context,
@@ -48,28 +46,25 @@ Future<void> logoutDialog(BuildContext context) async {
   );
 }
 
-Future<void> iosDialog(BuildContext context) async {
+Future<void> iosDialog(BuildContext context, Function onComplete) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: true, // user must tap button!
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text('Sign Out Confirmation'),
-        content: Text(
-            'Are you sure you want to sign out from the app. You will have to login the next time you open the app'),
+        title: Text('Background process'),
+        content:
+            Text('This process requires internet, to complete this process.'),
         actions: <Widget>[
           CupertinoDialogAction(
-            child: Text('Cancel'),
+            child: Text('Stop'),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           CupertinoDialogAction(
-            child: Text('Sign Out'),
-            onPressed: () {
-              Navigator.of(context).pop();
-              // deleteCache(context);
-            },
+            child: Text('Continue'),
+            onPressed: onComplete,
           ),
         ],
       );

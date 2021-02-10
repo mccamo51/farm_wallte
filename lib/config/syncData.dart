@@ -21,7 +21,6 @@ Future<String> syncRecordForm(
 
     http.MultipartRequest request = new http.MultipartRequest('POST', uri);
     request.fields['name'] = "${meta["fullname"]}";
-    // request.fields['dateCreate'] = "${meta["date"]}";
     request.fields['gender'] = meta["gender"].toString();
     request.fields['age'] = "${meta["age"]}";
     request.fields['phone'] = "${meta["phone"]}";
@@ -54,7 +53,7 @@ Future<String> syncRecordForm(
         final data = json.decode(value);
         if (data['status'] == "success") {
           toastContainer(text: "successfully");
-          navigation(context: context, pageName: "home");
+          // navigation(context: context, pageName: "home");
         }
       });
       var success = {"ok": true, "msg": "Success"};

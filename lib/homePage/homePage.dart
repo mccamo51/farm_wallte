@@ -32,12 +32,29 @@ class _HomePageState extends State<HomePage> {
   String _loadingMsg = "";
 
   int len = 0;
-  int onl = 0;
   hitApi() async {
     OnlineDataModel data =
         await Provider.of<UserDataProvider>(context, listen: false)
             .apiRequest();
     Provider.of<UserDataProvider>(context, listen: false).setData(data);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkConnection().then((value) {
+      if (value) {
+        int len = recordModelList.recordList.length;
+        print("local database $len");
+        if (len > 0) {
+          //sync case
+          setState(() {
+            _syncRecord();
+          });
+        }
+      }
+    });
   }
 
   @override
@@ -212,6 +229,58 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.exit_to_app),
       ),
     );
+  }
+
+  _syncRecord() {
+    _isLoading = true;
+    int len = recordModelList.recordList.length;
+    int count = 0;
+    setState(() {
+      _loadingMsg = "Syncing Record $count / $len";
+    });
+    for (var data in recordModelList.recordList) {
+      Timer(const Duration(seconds: 2), () async {
+        Map<String, dynamic> newMeta = {
+          "fullname": data.fullname,
+          "age": data.age,
+          "gender": data.gender,
+          "location": data.location,
+          "image": data.image,
+          "phone": data.phoneNumber,
+          "date": data.date,
+          "id": data.id,
+        };
+        print("======================${newMeta['id']}");
+        await syncRecordForm(newMeta, context).then((value) {
+          Map<String, dynamic> decodeData = json.decode(value);
+          if (decodeData["ok"] == true) {
+            //     //deleting data
+            DBProvider.db.deleteOfflineRecord(data.id);
+            ++count;
+            setState(() {
+              _loadingMsg = "Syncing Record $count / $len";
+            });
+            if (len == count) {
+              setState(() {
+                _isLoading = false;
+              });
+              // getAllRecords().whenComplete(
+              //     () => navigation(context: context, pageName: "home"));
+              toastContainer(
+                text: "$len file(s) sync successfully",
+                backgroundColor: PRIMARYCOLOR,
+              );
+            }
+          } else {
+            setState(() => _isLoading = false);
+            toastContainer(
+              text: decodeData['msg'],
+              backgroundColor: Colors.red,
+            );
+          }
+        });
+      });
+    }
   }
 
   Future<void> neverSatisfied({Function onLine, Function offLine}) async {

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:farmWallet/components/alerts.dart';
 import 'package:farmWallet/components/emptyBox.dart';
 import 'package:farmWallet/components/toast.dart';
 import 'package:farmWallet/config/localstorage/database.dart';
@@ -33,7 +34,6 @@ class _OfflineViewState extends State<OfflineView> {
 
   @override
   Widget build(BuildContext context) {
-    // getAllRecords();
     return Scaffold(
         appBar: AppBar(
           title: Text("Offline View"),
@@ -45,9 +45,10 @@ class _OfflineViewState extends State<OfflineView> {
                   color: WHITE,
                 ),
                 onPressed: () {
-                  // getAllRecords().whenComplete(() {
-                  syncRecord(context);
-                  // });
+                  iosDialog(context, () {
+                    getAllRecords().whenComplete(
+                        () => navigation(context: context, pageName: "home"));
+                  });
                 },
                 label: Text(
                   "Sync All",
@@ -83,7 +84,6 @@ class _OfflineViewState extends State<OfflineView> {
                                 age: data.age,
                                 fullname: data.fullname,
                                 gender: data.gender,
-                                // image: null,
                                 location: data.location,
                                 phone: data.phoneNumber,
                                 icon: data.image,
@@ -141,7 +141,7 @@ class _OfflineViewState extends State<OfflineView> {
     });
   }
 
-  void syncRecord(BuildContext context) {
+  Future<void> _syncRecord(BuildContext context) async {
     _isLoading = true;
     int len = recordModelList.recordList.length;
     int count = 0;
@@ -149,7 +149,7 @@ class _OfflineViewState extends State<OfflineView> {
       _loadingMsg = "Syncing Record $count / $len";
     });
     for (var data in recordModelList.recordList) {
-      Timer(const Duration(seconds: 1), () async {
+      Timer(const Duration(seconds: 2), () async {
         Map<String, dynamic> newMeta = {
           "fullname": data.fullname,
           "age": data.age,
@@ -164,9 +164,8 @@ class _OfflineViewState extends State<OfflineView> {
         await syncRecordForm(newMeta, context).then((value) {
           Map<String, dynamic> decodeData = json.decode(value);
           if (decodeData["ok"] == true) {
-            //deleting data
-            DBProvider.db
-                .deleteOfflineRecord(int.parse(data.id.toString()));
+            //     //deleting data
+            DBProvider.db.deleteOfflineRecord(data.id);
             ++count;
             setState(() {
               _loadingMsg = "Syncing Record $count / $len";
@@ -176,9 +175,9 @@ class _OfflineViewState extends State<OfflineView> {
                 _isLoading = false;
               });
               toastContainer(
-                  text: "$len file(s) sync successfully",
-                  backgroundColor: PRIMARYCOLOR);
-              navigation(context: context, pageName: "home");
+                text: "$len file(s) sync successfully",
+                backgroundColor: PRIMARYCOLOR,
+              );
             }
           } else {
             setState(() => _isLoading = false);
