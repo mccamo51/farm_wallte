@@ -49,115 +49,50 @@ class _HomePageState extends State<HomePage> {
     });
     return Scaffold(
       backgroundColor: WHITE,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 230,
-                color: PRIMARYCOLOR,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 80,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Hello, $userName",
-                            style: h3WHITE,
-                          ),
-                          Text(
-                            "Online Records: ${Provider.of<UserDataProvider>(context, listen: false).getData().data.length}",
-                            style: h4White,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Good $weekDay",
-                            style: h4White,
-                          ),
-                          Text(
-                            "Offline Records: ${recordModelList.recordList.length}",
-                            style: h4White,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 180.0, left: 10, right: 10),
-                child: Card(
-                  child: Container(
-                    // height: 150,
-                    width: double.infinity,
-                    padding: EdgeInsets.all(25),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 230,
+                  color: PRIMARYCOLOR,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(
+                          height: 80,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Column(
-                              children: [
-                                FlatButton(
-                                    onPressed: () {
-                                      navigation(
-                                        context: context,
-                                        pageName: "addnewrecord",
-                                      );
-                                    },
-                                    child: Image.asset(
-                                      "$ADDIMAGE",
-                                      height: 64,
-                                      width: 64,
-                                    )),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text("Add Record")
-                              ],
+                            Text(
+                              "Hello, $userName",
+                              style: h3WHITE,
                             ),
-                            Column(
-                              children: [
-                                FlatButton(
-                                    onPressed: () {
-                                      neverSatisfied(onLine: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => OnlineView(),
-                                          ),
-                                        );
-                                      }, offLine: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => OfflineView(),
-                                          ),
-                                        );
-                                      });
-                                    },
-                                    child: Image.asset("assets/view.png")),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text("View Record")
-                              ],
+                            Text(
+                              "Online Records: ${Provider.of<UserDataProvider>(context, listen: false).getData().data.length}",
+                              style: h4White,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Good $weekDay",
+                              style: h4White,
+                            ),
+                            Text(
+                              "Offline Records: ${recordModelList.recordList.length}",
+                              style: h4White,
                             ),
                           ],
                         )
@@ -165,42 +100,112 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 160,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Gallery",
-                    style: h3Black,
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 180.0, left: 10, right: 10),
+                  child: Card(
+                    child: Container(
+                      // height: 150,
+                      width: double.infinity,
+                      padding: EdgeInsets.all(25),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  FlatButton(
+                                      onPressed: () {
+                                        navigation(
+                                          context: context,
+                                          pageName: "addnewrecord",
+                                        );
+                                      },
+                                      child: Image.asset(
+                                        "$ADDIMAGE",
+                                        height: 64,
+                                        width: 64,
+                                      )),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text("Add Record")
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  FlatButton(
+                                      onPressed: () {
+                                        neverSatisfied(onLine: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OnlineView(),
+                                            ),
+                                          );
+                                        }, offLine: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OfflineView(),
+                                            ),
+                                          );
+                                        });
+                                      },
+                                      child: Image.asset("assets/view.png")),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text("View Record")
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                  boxItem(context: context)
-                ],
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 160,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Gallery",
+                      style: h3Black,
+                    ),
+                    boxItem(context: context)
+                  ],
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 160,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Best Farmers",
-                    style: h3Black,
-                  ),
-                  boxItem(context: context)
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 160,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Best Farmers",
+                      style: h3Black,
+                    ),
+                    boxItem(context: context)
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => logoutDialog(context),

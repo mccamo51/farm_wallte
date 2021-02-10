@@ -45,9 +45,9 @@ class _OfflineViewState extends State<OfflineView> {
                   color: WHITE,
                 ),
                 onPressed: () {
-                  getAllRecords().whenComplete(() {
-                    syncRecord(context);
-                  });
+                  // getAllRecords().whenComplete(() {
+                  syncRecord(context);
+                  // });
                 },
                 label: Text(
                   "Sync All",
@@ -146,10 +146,10 @@ class _OfflineViewState extends State<OfflineView> {
     int len = recordModelList.recordList.length;
     int count = 0;
     setState(() {
-      _loadingMsg = "Syncing Case $count / $len";
+      _loadingMsg = "Syncing Record $count / $len";
     });
     for (var data in recordModelList.recordList) {
-      Timer(const Duration(seconds: 2), () async {
+      Timer(const Duration(seconds: 1), () async {
         Map<String, dynamic> newMeta = {
           "fullname": data.fullname,
           "age": data.age,
@@ -158,16 +158,18 @@ class _OfflineViewState extends State<OfflineView> {
           "image": data.image,
           "phone": data.phoneNumber,
           "date": data.date,
+          "id": data.id,
         };
+        print("======================${newMeta['id']}");
         await syncRecordForm(newMeta, context).then((value) {
           Map<String, dynamic> decodeData = json.decode(value);
           if (decodeData["ok"] == true) {
             //deleting data
-            print(data.id);
-            DBProvider.db.deleteOfflineRecord(int.parse(data.id.toString()));
+            DBProvider.db
+                .deleteOfflineRecord(int.parse(data.id.toString()));
             ++count;
             setState(() {
-              _loadingMsg = "Syncing Case $count / $len";
+              _loadingMsg = "Syncing Record $count / $len";
             });
             if (len == count) {
               setState(() {

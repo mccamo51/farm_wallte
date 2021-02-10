@@ -3,77 +3,7 @@ import 'package:farmWallet/spec/sharePreference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Future<void> iceAlert(BuildContext context, msg) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: true, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        // title: Text('Rewind and remember'),
-        content: SingleChildScrollView(
-          child: Text(
-            // 'Your ICE contact is needed for a variety of reasons.',
-            '$msg',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          ),
-        ),
-        // actions: <Widget>[
-        //   FlatButton(
-        //     child: Text('Ok'),
-        //     onPressed: () {
-        //       Navigator.of(context).pop();
-        //     },
-        //   ),
-        // ],
-      );
-    },
-  );
-}
 
-// wrongPasswordToast(
-//     {BuildContext context, @required String msg, @required String title}) {
-//   BotToast.showAttachedWidget(
-//       attachedBuilder: (_) => Container(
-//             height: 66,
-//             width: MediaQuery.of(context).size.width,
-//             child: Card(
-//               borderOnForeground: true,
-//               child: Padding(
-//                   padding: const EdgeInsets.all(8.0),
-//                   child: Row(
-//                     children: [
-//                       SizedBox(
-//                         width: 4,
-//                       ),
-//                       Image.asset("assets/images/error.png"),
-//                       SizedBox(
-//                         width: 10,
-//                       ),
-//                       Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           SizedBox(
-//                             height: 3,
-//                           ),
-//                           Text(
-//                             "$title",
-//                             style: TextStyle(
-//                                 color: PRIMARYCOLOR,
-//                                 fontWeight: FontWeight.bold),
-//                           ),
-//                           SizedBox(
-//                             height: 3,
-//                           ),
-//                           Text("$msg"),
-//                         ],
-//                       )
-//                     ],
-//                   )),
-//             ),
-//           ),
-//       duration: Duration(seconds: 3),
-//       target: Offset(520, 520));
-// }
 
 Future<void> logoutDialog(BuildContext context) async {
   return showDialog<void>(
